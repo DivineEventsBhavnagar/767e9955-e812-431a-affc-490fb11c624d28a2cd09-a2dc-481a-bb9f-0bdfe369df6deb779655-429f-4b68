@@ -371,7 +371,7 @@
         </div>
 
         <div class="form">
-          <form action="" autocomplete="off"  name="google-sheet" role="form" class="contactForm">
+          <form action="#" autocomplete="off"  name="google-sheet" role="form" class="contactForm">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <input type="text" name="name" class="form-control name" id="name" placeholder="Your Name" required />
@@ -427,29 +427,27 @@
               let Messagebox = document.getElementById("message");
               let Subbtn = document.getElementById("subbtn");
             
-              async function AddDocument_CustomID() {
-                debugger;
-                var ref = doc(db, "EventsData", Emailbox.value);
-              await setDoc(
-                ref, {
-                Name: Namebox.value,
-                Email: Emailbox.value,
-                ContactNumber: Subjectbox.value,
-                Message: Messagebox.value
+             async function AddDocument_CustomID(event) {
+                  event.preventDefault(); // Prevent the form from submitting
+                  debugger;
+                  var ref = doc(db, "EventsData", Emailbox.value);
+                  await setDoc(
+                      ref, {
+                          Name: Namebox.value,
+                          Email: Emailbox.value,
+                          ContactNumber: Subjectbox.value,
+                          Message: Messagebox.value
+                      }
+                  )
+                  .then(() => {
+                      alert("Data added successfully");
+                  })
+                  .catch((error) => {
+                      alert("Unsuccessful, error: " + error);
+                  });
               }
-              )
-          
-                .then(() => {
-          
-                  alert("data added successfully");
-          
-                }
-                )
-                .catch((error) => {
-                  alert("unsuccessfull,error:" + error);
-                });
-          
-            }
+              
+                              
             async function GetADocument() {
               var ref = doc(db, "EventsData", document.getElementById("Emailbox").value)
               const docSnap = await getDoc(ref);
